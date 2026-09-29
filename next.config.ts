@@ -35,7 +35,7 @@ const securityHeaders = [
 
 const nextConfig: NextConfig = {
   poweredByHeader: false,
-  serverExternalPackages: ["postgres", "sharp"],
+  serverExternalPackages: ["postgres", "sharp", "@electric-sql/pglite"],
   images: {
     formats: ["image/avif", "image/webp"],
     remotePatterns: supabaseHost ? [{ protocol: "https", hostname: supabaseHost, pathname: "/storage/v1/object/public/**" }] : [],
@@ -67,6 +67,10 @@ const nextConfig: NextConfig = {
   },
   experimental: {
     serverActions: { bodySizeLimit: "16mb" },
+  },
+  // Seed files are read at runtime only when DATABASE_URL is absent.
+  outputFileTracingIncludes: {
+    "/*": ["./supabase/migrations/**", "./supabase/seed.sql", "./scripts/test-auth-shim.sql"],
   },
 };
 

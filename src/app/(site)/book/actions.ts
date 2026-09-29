@@ -1,5 +1,5 @@
 "use server";
-import { sql } from "@/lib/db";
+import { sql, databaseNotReadyMessage, isEphemeralDatabase } from "@/lib/db";
 import { env } from "@/lib/env";
 import { getStripe } from "@/lib/stripe";
 import { getViewer } from "@/lib/auth";
@@ -18,6 +18,7 @@ export async function startCheckoutAction(payload: unknown): Promise<CheckoutRes
     return { ok: false, error: "Please check the highlighted details.", fieldErrors: fieldErrors(parsed.error) };
   }
   if (parsed.data.website) return { ok: false, error: "Unable to process this booking." };
+  if (isEphemeralDatabase) return { ok: false, error: databaseNotReadyMessage, code: "payments_unavailable" };
   try {
     const viewer = await getViewer().catch(() => null);
     const { url } = await startCheckout(sql, parsed.data, { stripe: getStripe(), siteUrl: env.siteUrl }, { userId: viewer?.id, userEmail: viewer?.emailConfirmed ? viewer.email : null });

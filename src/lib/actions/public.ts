@@ -1,5 +1,5 @@
 "use server";
-import { sql } from "../db";
+import { databaseNotReadyMessage, isEphemeralDatabase, sql } from "../db";
 import { env } from "../env";
 import { getViewer } from "../auth";
 import { rateLimit } from "../request";
@@ -17,6 +17,7 @@ export async function submitContact(_prev: FormState, fd: FormData): Promise<For
   if (!parsed.success) return { ok: false, message: "Please check the highlighted fields.", errors: fieldErrors(parsed.error) };
   const m = parsed.data;
   if (m.website) return { ok: true, message: "Thank you — your message has been sent." };
+  if (isEphemeralDatabase) return { ok: false, message: databaseNotReadyMessage };
   await sql`insert into public.contact_messages (name, email, phone, subject, message) values (${m.name}, ${m.email}, ${m.phone || null}, ${m.subject}, ${m.message})`;
   const settings = await getSettings().catch(() => null);
   const to = settings?.adminNotificationEmail ?? settings?.contactEmail ?? env.adminNotificationEmail;
@@ -59,6 +60,7 @@ export async function submitCatchReturn(_prev: FormState, fd: FormData): Promise
   if (!parsed.success) return { ok: false, message: "Please check the highlighted fields.", errors: fieldErrors(parsed.error) };
   const r = parsed.data;
   if (r.website) return { ok: true, message: "Thank you." };
+  if (isEphemeralDatabase) return { ok: false, message: databaseNotReadyMessage };
   if (!r.isBlank && r.items.length === 0) return { ok: false, message: "Add at least one fish, or tick “blank day” if you caught nothing.", errors: { items: "Add a fish or mark a blank day" } };
   if (r.fishingDate > clubToday()) return { ok: false, errors: { fishingDate: "The date can't be in the future" } };
 

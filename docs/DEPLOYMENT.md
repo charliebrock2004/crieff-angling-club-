@@ -92,8 +92,12 @@ offer / confirmed, contact-form notification. All are logged in Admin → Settin
    test keys if you use previews). Generate `IP_HASH_SALT` and `CRON_SECRET` with
    `openssl rand -hex 32`.
 3. Region: `vercel.json` pins functions to London (`lhr1`) — next to the Supabase database.
-4. Deploy. The build pre-renders public pages from the database, so
-   `DATABASE_URL` must be available at build time.
+4. Deploy. Public pages are pre-rendered from the database when `DATABASE_URL`
+   is set. If it is not set yet, the build uses an in-process copy of the seed
+   data so the site can still be browsed. That copy is not durable: checkout,
+   messages, catch returns and membership applications are refused until the
+   real database is connected, and nothing is charged. Set `DATABASE_URL` and
+   redeploy before taking bookings.
 5. Domains: add `www.crieffanglingclub.org.uk` and redirect the apex domain to it.
    Update the DNS at the registrar as Vercel instructs.
 6. **Cron**: `vercel.json` schedules `/api/cron/housekeeping` daily; Vercel sends

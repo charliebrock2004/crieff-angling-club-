@@ -1,6 +1,6 @@
 "use server";
 import { redirect } from "next/navigation";
-import { sql } from "../db";
+import { databaseNotReadyMessage, isEphemeralDatabase, sql } from "../db";
 import { env } from "../env";
 import { getViewer } from "../auth";
 import { rateLimit } from "../request";
@@ -20,6 +20,7 @@ export async function applyForMembership(_prev: FormState, fd: FormData): Promis
   if (!parsed.success) return { ok: false, message: "Please check the highlighted fields.", errors: fieldErrors(parsed.error) };
   const a = parsed.data;
   if (a.website) return { ok: true, message: "Thank you." };
+  if (isEphemeralDatabase) return { ok: false, message: databaseNotReadyMessage };
   const [type] = await sql`select id, name, online_application_enabled from public.membership_types where id = ${a.membershipTypeId} and is_active`;
   if (!type || !type.online_application_enabled) return { ok: false, errors: { membershipTypeId: "Choose a membership type" } };
   const [existing] = await sql`select reference from public.membership_applications where email = ${a.email} and membership_type_id = ${type.id} and status in ('submitted', 'waiting_list', 'offered')`;
