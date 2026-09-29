@@ -1,0 +1,18 @@
+export const ADMIN_NAV = [
+  { href: "/admin", label: "Dashboard", icon: "M3 12l9-8 9 8M5 10v10h14V10" },
+  { href: "/admin/bookings", label: "Bookings", icon: "M4 5h16v14H4zM4 9h16M9 5v4M15 5v4" },
+  { href: "/admin/calendar", label: "Calendar", icon: "M4 5h16v15H4zM4 10h16M8 3v4M16 3v4" },
+  { href: "/admin/customers", label: "Customers", icon: "M16 19v-1a4 4 0 0 0-8 0v1M12 11a3 3 0 1 0 0-6 3 3 0 0 0 0 6" },
+  { href: "/admin/waters", label: "Waters", icon: "M3 15c3-2 6-2 9 0s6 2 9 0M3 19c3-2 6-2 9 0s6 2 9 0M12 3c-3 4-3 7 0 9 3-2 3-5 0-9" },
+  { href: "/admin/beats", label: "Beats", icon: "M4 18c4-8 12-4 16-12M4 6h4M16 18h4" },
+  { href: "/admin/permit-types", label: "Permit types", icon: "M5 4h14v16l-3-2-2 2-2-2-2 2-2-2-3 2zM9 9h6M9 13h6" },
+  { href: "/admin/availability", label: "Availability", icon: "M12 3v18M3 12h18M6 6l12 12" },
+  { href: "/admin/boats", label: "Boats", icon: "M3 14h18l-3 5H6zM12 4v10M12 4l6 7h-6" },
+  { href: "/admin/membership", label: "Membership", icon: "M12 3l8 4v5c0 5-3.5 8-8 9-4.5-1-8-4-8-9V7z" },
+  { href: "/admin/catch-returns", label: "Catch returns", icon: "M3 12c4-5 10-5 14 0-4 5-10 5-14 0zM17 12l4-3v6z" },
+  { href: "/admin/news", label: "News", icon: "M4 5h13v14H6a2 2 0 0 1-2-2zM17 9h3v8a2 2 0 0 1-2 2M8 9h5M8 13h5" },
+  { href: "/admin/gallery", label: "Gallery", icon: "M4 5h16v14H4zM4 15l5-5 4 4 3-3 4 4" },
+  { href: "/admin/rules", label: "Rules", icon: "M6 4h12v16H6zM9 8h6M9 12h6M9 16h4" },
+  { href: "/admin/seasons", label: "Fishing seasons", icon: "M12 3a9 9 0 1 0 9 9M12 7v5l3 3" },
+  { href: "/admin/settings", label: "Settings", icon: "M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM19 12l2-1-1-3-2 .5-1.5-1.5.5-2-3-1-1 2h-2l-1-2-3 1 .5 2L6 8.5 4 8l-1 3 2 1v0l-2 1 1 3 2-.5L7.5 17 7 19l3 1 1-2h2l1 2 3-1-.5-2 1.5-1.5 2 .5 1-3z" },
+];

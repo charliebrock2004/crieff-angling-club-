@@ -1,0 +1,175 @@
+@import "tailwindcss";
+
+/* ==========================================================================
+   Crieff Angling Club — design tokens
+   Natural Perthshire palette: peat water, moss, bracken, loch slate, paper.
+   ========================================================================== */
+@theme {
+  --font-display: var(--font-newsreader), "Iowan Old Style", Georgia, serif;
+  --font-sans: var(--font-hanken), ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  --color-peat: #14221d;
+  --color-peat-2: #1c2e27;
+  --color-moss: #2f4a3a;
+  --color-fern: #4f6f55;
+  --color-lichen: #a9b79c;
+  --color-bracken: #b8782e;
+  --color-bracken-dark: #8f5a1d;
+  --color-heather: #7a5a78;
+  --color-loch: #3b5566;
+  --color-mist: #e9e4d8;
+  --color-paper: #f5f1e8;
+  --color-bone: #fbf9f4;
+  --color-stone: #5b665f;
+  --color-line: #e0d9ca;
+  --color-good: #2f6b45;
+  --color-good-bg: #e5efe6;
+  --color-bad: #9b3b30;
+  --color-bad-bg: #f6e4e1;
+  --color-warn: #8a5a12;
+  --color-warn-bg: #f7ecd6;
+  --color-info: #33536a;
+  --color-info-bg: #e3ecf1;
+
+  --radius-card: 1.25rem;
+  --shadow-card: 0 1px 2px rgb(20 34 29 / 0.04), 0 8px 24px -12px rgb(20 34 29 / 0.18);
+  --shadow-lift: 0 2px 4px rgb(20 34 29 / 0.06), 0 22px 44px -18px rgb(20 34 29 / 0.35);
+
+  --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
+  --animate-rise: rise 0.9s var(--ease-out-soft) both;
+  --animate-fade: fade 1.2s ease both;
+
+  @keyframes rise {
+    from { opacity: 0; transform: translateY(14px); }
+    to { opacity: 1; transform: none; }
+  }
+  @keyframes fade {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    text-rendering: optimizeLegibility;
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-paper text-peat font-sans antialiased;
+    font-feature-settings: "ss01", "kern";
+  }
+  h1, h2, h3, h4 {
+    @apply font-display text-balance;
+    font-optical-sizing: auto;
+    letter-spacing: -0.012em;
+  }
+  ::selection {
+    background: var(--color-bracken);
+    color: var(--color-bone);
+  }
+  :focus-visible {
+    outline: 3px solid var(--color-bracken);
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+  a {
+    text-underline-offset: 0.18em;
+    text-decoration-thickness: 1px;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+@layer components {
+  .container-club {
+    @apply mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-10;
+  }
+  .eyebrow {
+    @apply font-sans text-[0.72rem] font-semibold uppercase tracking-[0.22em] text-bracken;
+  }
+  .display-xl {
+    @apply font-display text-[2.9rem] leading-[0.98] sm:text-7xl lg:text-[6.4rem];
+    font-weight: 380;
+    letter-spacing: -0.03em;
+  }
+  .display-lg {
+    @apply font-display text-4xl leading-[1.04] sm:text-5xl lg:text-6xl;
+    font-weight: 400;
+    letter-spacing: -0.025em;
+  }
+  .display-md {
+    @apply font-display text-3xl leading-tight sm:text-4xl;
+    font-weight: 420;
+  }
+  .lede {
+    @apply text-lg leading-relaxed text-stone sm:text-xl;
+  }
+  .card {
+    @apply rounded-[var(--radius-card)] border border-line bg-bone shadow-[var(--shadow-card)];
+  }
+  .grain {
+    position: relative;
+    isolation: isolate;
+  }
+  .grain::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.09;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  }
+
+  /* Long-form content rendered from Markdown */
+  .prose-club {
+    @apply max-w-[68ch] text-[1.06rem] leading-[1.75] text-peat/90;
+  }
+  .prose-club > * + * { @apply mt-5; }
+  .prose-club h2 { @apply mt-12 font-display text-3xl leading-tight text-peat; }
+  .prose-club h3 { @apply mt-9 font-display text-2xl text-peat; }
+  .prose-club h4 { @apply mt-7 font-sans text-sm font-semibold uppercase tracking-widest text-stone; }
+  .prose-club ul { @apply list-disc space-y-2 pl-6 marker:text-bracken; }
+  .prose-club ol { @apply list-decimal space-y-2 pl-6 marker:text-bracken; }
+  .prose-club a { @apply text-peat underline decoration-bracken/60 underline-offset-4 hover:decoration-bracken; }
+  .prose-club strong { @apply font-semibold text-peat; }
+  .prose-club blockquote { @apply border-l-2 border-bracken pl-5 font-display text-xl italic text-peat; }
+
+  /* Forms */
+  .field-label { @apply mb-1.5 block text-sm font-medium text-peat; }
+  .field-hint { @apply mt-1.5 text-sm text-stone; }
+  .field-error { @apply mt-1.5 text-sm font-medium text-bad; }
+  .input {
+    @apply block w-full rounded-xl border border-line bg-white px-3.5 py-3 text-base text-peat shadow-sm transition
+      placeholder:text-stone/60 hover:border-stone/40 focus:border-bracken focus:outline-none focus:ring-4 focus:ring-bracken/15
+      disabled:cursor-not-allowed disabled:bg-mist/60 aria-[invalid=true]:border-bad aria-[invalid=true]:ring-bad/10;
+  }
+  .input-sm { @apply py-2 text-sm; }
+
+  /* Tables (admin) */
+  .table-club { @apply w-full border-collapse text-left text-sm; }
+  .table-club th { @apply sticky top-0 z-10 border-b border-line bg-bone px-3 py-2.5 text-xs font-semibold uppercase tracking-wider text-stone; }
+  .table-club td { @apply border-b border-line/70 px-3 py-3 align-top; }
+  .table-club tbody tr { @apply transition-colors hover:bg-mist/40; }
+}
+
+@utility scrollbar-none {
+  scrollbar-width: none;
+  &::-webkit-scrollbar { display: none; }
+}
+
+@utility link-underline {
+  text-decoration-line: underline;
+  text-decoration-color: color-mix(in oklab, var(--color-bracken) 60%, transparent);
+  text-underline-offset: 4px;
+  &:hover {
+    text-decoration-color: var(--color-bracken);
+  }
+}

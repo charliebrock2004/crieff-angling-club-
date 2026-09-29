@@ -1,0 +1,10 @@
+import { chromium } from "playwright";
+const [path, out, width = "1440", as = ""] = process.argv.slice(2);
+const b = await chromium.launch({ executablePath: process.env.CHROMIUM_PATH || undefined });
+const ctx = await b.newContext({ viewport: { width: Number(width), height: 900 } });
+if (as) await ctx.addCookies([{ name: "e2e_user", value: as, url: "http://localhost:3000" }]);
+const p = await ctx.newPage();
+await p.goto("http://localhost:3000" + path, { waitUntil: "networkidle" });
+await p.waitForTimeout(500);
+await p.screenshot({ path: out, fullPage: true });
+await b.close();
