@@ -73,6 +73,17 @@ export function Footer({ settings }: { settings: SiteSettings }) {
             <li><Link href="/cancellation-policy" className="hover:text-bone">Cancellations</Link></li>
           </ul>
         </div>
+        <p className="container-club text-bone/40 pb-6 text-[0.7rem] leading-relaxed">
+          Website built by{" "}
+          <a
+            href="https://peakswift-website-psi.vercel.app"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="underline decoration-white/20 underline-offset-4 transition-colors hover:text-bone hover:decoration-bone"
+          >
+            PeakSwift Studio
+          </a>
+        </p>
       </div>
     </footer>
   );
